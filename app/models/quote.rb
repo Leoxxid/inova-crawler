@@ -6,7 +6,5 @@ class Quote
   field :author_about, type: String
 
   embeds_many :tags
-  belongs_to :search_tag
-
-  accepts_nested_attributes_for :tags
+  embedded_in :search_tag
 end
