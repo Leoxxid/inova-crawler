@@ -1,7 +1,12 @@
+require 'rubygems'
+
+Dir[File.expand_path(
+  File.join(File.dirname(__FILE__), 'support', '**', '*.rb')
+)].each { |f| require f }
+
 RSpec.configure do |config|
-  config.include ApiHelper, type: :api
-  config.include Requests::JsonHelpers, type: :api
-  
+  config.include ApiHelpers, type: :api
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
