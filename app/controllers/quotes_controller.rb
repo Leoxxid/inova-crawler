@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# QuotesController
 class QuotesController < ApplicationController
   before_action :set_search_tag
 

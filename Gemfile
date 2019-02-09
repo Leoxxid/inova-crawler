@@ -6,8 +6,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'active_model_serializers'
+gem 'bcrypt', '~> 3.1.7'
+gem 'jwt'
 gem 'mongoid', '~> 6.1.0'
 gem 'rubocop', require: false
+gem 'simple_command'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use Puma as the app server
