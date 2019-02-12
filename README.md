@@ -1,24 +1,136 @@
-# README
+# Inova Crawler
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](LICENSE) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-Things you may want to cover:
+Inova Crawler é um web crawler que captura frases do site http://quotes.toscrape.com.
 
-* Ruby version
+- [Pré requisitos](#pré-requisitos)
+- [Primeiros passos](#primeiros-passos)
+- [Documentação da Api](#documentação-da-api)
+- [Licença](#licensa)
 
-* System dependencies
+## Pré requisitos
 
-* Configuration
+As dependências deste projeto são:
 
-* Database creation
+- Rails 5.2
+- Ruby 2.5
+- MongoDB 4.0
 
-* Database initialization
+## Primeiros passos
 
-* How to run the test suite
+Siga as seguintes instruções para ter uma cópia deste projeto e conseguir executá-lo localmente.
 
-* Services (job queues, cache servers, search engines, etc.)
+Depois de copiar o repositório para sua máquina, acesse o diretório raiz do projeto e:
 
-* Deployment instructions
+1. Inicie o MongoDB:  
+ ``` sudo service mongod start ```
 
-* ...
+2. Crie um usuário de autenticação:  
+ ```rails user:create ```  
+ **obs:** após a execução, será exibido as informações de autenticação do sistema.
+  
+3. Inicie o server:  
+ ```rails s```
+
+## Documentação da Api
+### Introdução  
+Através desta documentação você aprenderá como se autenticar e buscar frases de acordo com uma tag específica.
+
+### Requisições
+[Autenticação](#autenticação)  
+[Frases](#autenticação)  
+  
+### Autenticação
+Este sistema possui uma autenticão baseada em token.  
+Utilize este endpoint para obter o token.
+
+obs: o token gerado só é válido por 24 horas. 
+ 
+- Url  
+  `/authenticate `  
+  
+- Método  
+  `POST`
+
+- Body
+```  
+  {
+    "email": "example@inovamind.com",
+    "password": "111111"
+  }
+```  
+Exemplo de Requisição cUrl
+```
+curl -H "Content-Type: application/json" -X POST -d '{"email":"example@inovamind.com","password":"111111"}' http://localhost:3000/authenticate
+```
+Tipos de Resposta:  
+  
+ - Sucesso - 200  
+```
+ {
+      "auth_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjp7IiRvaWQiOiI1YzYyZTBiMDFhMmM0ZTNjN2FiMTk2ZmUifSwiZXhwIjoxNTUwMDc4NzIzfQ.MNJ_hj3iDoNvTP4qvz0XjLoL9Np2HrzikpvneW6g_2M"
+  }
+```  
+  
+ - Inválido - 401
+````
+ {
+      "error": {
+          "user_authentication": [
+              "invalid credentials"
+          ]
+      }
+  }
+```  
+
+### Frases
+#### Exibir frases 
+Exibe frases relacionadas a uma tag específica
+  
+- Url  
+  `/quotes/:search_tag/?pages=2&clean-cache=true`  
+  
+- Método  
+  `GET`
+  
+- Headers  
+  `Authorization` = [token_gerado_na_autenticação](#autenticação) 
+
+- Url Parametros  
+  Obrigatório:  
+  `search_tag` - Tag que será buscada
+  
+  Opcional:  
+  `pages` - quantidade de páginas em que será realizado a buscar
+  
+  `clean-cache` - Apaga o simulador de cache e realiza o scrap novamente  
+    
+  Exemplo de Requisição cUrl  
+  ```  
+  curl -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NjA2NTgxODZ9.xsSwcPC22IR71OBv6bU_OGCSyfE89DvEzWfDU0iybMA" http://localhost:3000/quotes/love/?pages=2&clean-cache=true
+  ```
+  Tipos de Resposta:  
+    
+   - Sucesso - 200  
+  
+   ``` 
+    {
+        "quotes": [
+          {
+          "quote": "frase",
+          "author": "nome do autor",
+          "author_about": "link para o perfil do autor",
+          "tags": ["tag1", "tag2"]
+          }
+        ]
+    }
+  ```  
+  
+   - Falha - 200  
+  
+   ``` 
+    {
+        "not_found": "Don't found quotes with teste tag"
+    }
+  ```
