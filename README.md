@@ -39,7 +39,7 @@ Através desta documentação você aprenderá como se autenticar e buscar frase
 
 ### Requisições
 [Autenticação](#autenticação)  
-[Frases](#autenticação)  
+[Frases](#frases)  
   
 ### Autenticação
 Este sistema possui uma autenticão baseada em token.  
@@ -133,4 +133,8 @@ Exibe frases relacionadas a uma tag específica
     {
         "not_found": "Don't found quotes with teste tag"
     }
-  ```
+  ```  
+  
+## Licença
+
+Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para mais detalhes
