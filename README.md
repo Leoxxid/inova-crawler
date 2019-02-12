@@ -74,7 +74,7 @@ Tipos de Resposta:
 ```  
   
  - Inválido - 401
-````
+```
  {
       "error": {
           "user_authentication": [
