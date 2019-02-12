@@ -7,4 +7,13 @@ class Quote
 
   embeds_many :tags
   embedded_in :search_tag
+
+  def self.create_with_tags(quote_informations, tag)
+    quote = Quote.new(quote_informations.except(:tags))
+    quote_informations[:tags].each do |quote_tag|
+      quote.tags << Tag.new(name: quote_tag)
+    end
+    tag.quotes << quote
+    tag.save
+  end
 end

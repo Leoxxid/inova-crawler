@@ -5,12 +5,20 @@ class QuotesController < ApplicationController
   before_action :set_search_tag
 
   def show
-    unless @search_tag
+    @tag = SearchTag.where(name: @search_tag).first
+    if @tag
+      render json: @tag.quotes
+    else
+      @tag = ScrapTagService.new(tag: @search_tag, pages: params[:pages]).call
+      if @tag
+        render json: @tag.quotes
+      else
+        render json: { not_found: "Don't found quotes with #{@search_tag} tag" }
+      end
     end
-    render json: @search_tag.quotes
   end
 
   def set_search_tag
-    @search_tag = SearchTag.where(name: 'Tag1').first
+    @search_tag = params[:search_tag]
   end
 end
