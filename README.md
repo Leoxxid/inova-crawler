@@ -6,6 +6,7 @@ Inova Crawler é um web crawler que captura frases do site http://quotes.toscrap
 
 - [Pré requisitos](#pré-requisitos)
 - [Primeiros passos](#primeiros-passos)
+- [Testes](#testes)
 - [Documentação da Api](#documentação-da-api)
 - [Licença](#licensa)
 
@@ -32,6 +33,11 @@ Depois de copiar o repositório para sua máquina, acesse o diretório raiz do p
   
 3. Inicie o server:  
  ```rails s```
+
+## Testes  
+Utilize as instruções a seguir para testar a aplicação
+1. Executando os testes  
+  ``` bundle exec rspec```
 
 ## Documentação da Api
 ### Introdução  
